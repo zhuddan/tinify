@@ -2,10 +2,8 @@
   "name": "@zd~/tinify",
   "version": "0.0.1",
   "description": "a tinify cli",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
+  "author": "zhuddan",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://gist.github.com/zhuddan/tinify"
@@ -13,6 +11,28 @@
   "keywords": [
     "tinify"
   ],
-  "author": "zhuddan",
-  "license": "ISC"
+  "main": "index.js",
+  "bin": {
+    "@zd~/tinify": "dist/script.js",
+    "tinify": "dist/script.js"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "release": "bumpp",
+    "start": "node --trace-deprecation dist/script.js --help || true"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3",
+    "tinify": "^1.8.1",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.3.0",
+    "@types/node": "^24.3.1",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "eslint": "^9.35.0",
+    "ora": "^8.2.0"
+  }
 }
