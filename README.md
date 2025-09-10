@@ -1,4 +1,4 @@
-# @zd~/tinify
+# @zd~/tinify [![npm](https://img.shields.io/npm/v/@zd~/tinify.svg)](https://www.npmjs.com/package/@zd~/tinify)
 
 轻量级图片压缩命令行工具，基于 [tinypng.com](https://tinypng.com/developers) API。
 
