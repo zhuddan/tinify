@@ -39,7 +39,7 @@ export function getVersionUpdateInfo() {
     if (major > currentMajor
       || (major === currentMajor && minor > currentMinor)
       || (major === currentMajor && minor === currentMinor && patch > currentPatch)) {
-      return `\n${chalk.yellowBright(`发现新版本 ${lastVersion}，使用 npm i ${name} -g 更新`)}`
+      return `\n${chalk.dim(`发现新版本 ${lastVersion}，使用 npm i ${name} -g 更新`)}`
     }
     else {
       return ''
