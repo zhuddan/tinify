@@ -32,7 +32,7 @@
     "build": "tsup",
     "tag": "bump patch --tag",
     "start": "node --trace-deprecation dist/script.js --help || true",
-    "publish": "pnpm run tag && pnpm run build  && npm publish --access public"
+    "pub": "pnpm run tag && pnpm run build  && npm publish --access public"
   },
   "dependencies": {
     "fast-glob": "^3.3.3",
