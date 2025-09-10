@@ -1,14 +1,18 @@
 import chalk from 'chalk'
 
+import { name, version } from '../../package.json'
+import { getVersionUpdateInfo } from './version'
+
 const { black, cyanBright, greenBright, yellowBright, bold, gray } = chalk
 
 export function displayHelp() {
   console.log(`
-${bold(cyanBright('tinify  - 轻量级图片压缩命令行工具'))}
+${bold(cyanBright(`${name}@${version} - 轻量级图片压缩命令行工具`))}
+${getVersionUpdateInfo()}
 
 ${bold(black('安装方法:'))}
-  ${greenBright('npm i @zd~/tinify -g')}
-  ${greenBright('npx @zd~/tinify --help')}
+  ${greenBright(`npm i ${name} -g`)}
+  ${greenBright(`npx ${name} --help`)}
 ${gray('安装后可直接使用 ')}${greenBright('tinify')}${gray(' 命令')}
 
 ${bold(black('使用方法:'))}

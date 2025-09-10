@@ -1,36 +1,24 @@
 #!/usr/bin/env node
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 import fg from 'fast-glob'
 import tinify from 'tinify'
 import { AsyncTaskManager } from './AsyncTaskManager'
-import { API_FREE_CREDITS, CONFIG_FILE, DEFAULT_PATTERN } from './config'
+import { API_FREE_CREDITS, CONFIG_FILE_KEY, DEFAULT_PATTERN } from './config'
 import { Logger } from './Logger'
 import { positionals, values } from './utils/args'
 import { displayBanner } from './utils/banner'
 import { displayHelp } from './utils/help'
-
-/**
- * 用户主目录
- */
-const homeDir = os.homedir()
-/**
- * 配置文件路径
- *
- * mac & linux: ~/.zd.tinify
- * windows: C:\Users\用户名\.zd.tinify
- */
-const configFilePath = path.join(homeDir, CONFIG_FILE)
+import { fetchLatestVersion } from './utils/version'
 
 /**
  *
  * @returns 配置的 API Key
  */
 function getKey() {
-  if (fs.existsSync(configFilePath)) {
-    return fs.readFileSync(configFilePath, 'utf-8').trim()
+  if (fs.existsSync(CONFIG_FILE_KEY)) {
+    return fs.readFileSync(CONFIG_FILE_KEY, 'utf-8').trim()
   }
   else {
     return null
@@ -38,6 +26,7 @@ function getKey() {
 }
 
 async function main() {
+  fetchLatestVersion()
   if (values.help) {
     displayHelp()
     return
@@ -52,8 +41,8 @@ async function main() {
       process.exit(1)
     }
     // TODO: 保存 key 到配置文件
-    fs.writeFileSync(configFilePath, apiKey)
-    Logger.success(`API Key [${apiKey}] 保存成功! ${configFilePath}`)
+    fs.writeFileSync(CONFIG_FILE_KEY, apiKey)
+    Logger.success(`API Key [${apiKey}] 保存成功! ${CONFIG_FILE_KEY}`)
     return
   }
 
@@ -70,7 +59,7 @@ async function main() {
 
   if (key && !getKey()) {
     // 如果全局没有 key，则保存当前 key 以便下次使用
-    fs.writeFileSync(configFilePath, key)
+    fs.writeFileSync(CONFIG_FILE_KEY, key)
   }
   tinify.key = key
   const [pattern = DEFAULT_PATTERN] = [command, ...rest].filter(Boolean)
