@@ -42,7 +42,7 @@ async function main() {
     }
     // TODO: 保存 key 到配置文件
     fs.writeFileSync(CONFIG_FILE_KEY, apiKey)
-    Logger.success(`API Key [${apiKey}] 保存成功! ${CONFIG_FILE_KEY}`)
+    Logger.success(`API Key [${apiKey}] 保存成功!`)
     return
   }
 
