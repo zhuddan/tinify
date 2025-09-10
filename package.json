@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "tag": "bump patch --tag",
+    "tag": "bump patch --tag --commit --push",
     "start": "node --trace-deprecation dist/script.js --help || true",
     "pub": "pnpm run tag && pnpm run build  && npm publish --access public"
   },
