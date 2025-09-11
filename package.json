@@ -22,7 +22,6 @@
     "png",
     "jpg"
   ],
-  "main": "index.js",
   "bin": {
     "@zd~/tinify": "dist/script.js",
     "tinify": "dist/script.js"
