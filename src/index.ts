@@ -75,12 +75,11 @@ async function main() {
     return
   }
   Logger.info(`找到需要压缩的图片数量: ${files.length}`)
-  Logger.info(`清空输出文件夹，开始压缩...`)
   let progress = 0
-
   const _limit = Number.parseInt(values.limit)
   const limit = Number.isNaN(_limit) ? 10 : _limit <= 0 ? 1 : _limit
   const atm = new AsyncTaskManager({ maxConcurrency: limit })
+  Logger.info(`清空输出文件夹，开始压缩... (并发限制: ${limit})`)
   const tasks = files.map((relativePath) => {
     return async () => {
       const srcPath = path.join(inputDir, relativePath)
