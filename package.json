@@ -3,7 +3,7 @@
   "version": "0.0.20",
   "description": "a tinify cli",
   "author": "zhuddan",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://github.com/zhuddan/tinify#readme",
   "repository": {
     "type": "git",
@@ -27,6 +27,11 @@
     "@zd~/tinify": "dist/script.js",
     "tinify": "dist/script.js"
   },
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
