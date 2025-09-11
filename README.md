@@ -12,8 +12,6 @@
 
 ```bash
 npm i @zd~/tinify -g
-# 或者
-npx @zd~/tinify --help
 ```
 
 安装后可直接使用 `tinify` 命令。
