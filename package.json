@@ -39,17 +39,17 @@
     "start": "node --trace-deprecation dist/script.js --help || true"
   },
   "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
     "fast-glob": "^3.3.3",
+    "ora": "^8.2.0",
     "tinify": "^1.8.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.3.0",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@types/node": "^24.3.1",
-    "boxen": "^8.0.1",
-    "chalk": "^5.6.2",
     "eslint": "^9.35.0",
-    "ora": "^8.2.0",
     "terser": "^5.44.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2"
