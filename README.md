@@ -66,6 +66,7 @@ tinify --key <your_key> "imgs/*.webp"
 ## 注意事项
 - 免费用户每月可压缩 500 张图片，超过后需要等待下个月重置，或者升级为付费用户。
 - <glob-pattern> 参数默认为 `**/*.{png,jpg,jpeg}`，可根据需要自行调整，可参考 [fast-glob](https://github.com/mrmlnc/fast-glob)。
+- 默认会覆盖原图， 如果不需要覆盖原图，请使用 `--no-over` 参数，并且可以使用 `--output` 参数指定输出目录(默认tinify-output)。
 - 建议设置 `--limit` 参数以提高压缩速度，默认并发数为 10。
 - 用户 `key` 会保存在用户目录下的 `.zd.tinify.key` 文件中，请妥善保管，另外还有个 `.zd.tinify.version` 用于版本更新。
 
