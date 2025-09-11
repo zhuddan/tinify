@@ -34,6 +34,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
+    "bump": "bump",
     "tag": "bump patch --tag --commit --push",
     "start": "node --trace-deprecation dist/script.js --help || true"
   },
