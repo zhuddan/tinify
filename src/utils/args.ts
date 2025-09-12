@@ -35,13 +35,6 @@ const { values, positionals } = parseArgs({
       default: 'tinify-output',
     },
     /**
-     * 显示帮助
-     */
-    'help': {
-      type: 'boolean',
-      short: 'h',
-    },
-    /**
      * 并发限制，默认10
      */
     'limit': {
@@ -64,6 +57,20 @@ const { values, positionals } = parseArgs({
       type: 'boolean',
       default: false,
       short: 'c',
+    },
+    /**
+     * 显示帮助
+     */
+    'help': {
+      type: 'boolean',
+      short: 'h',
+    },
+    /**
+     * 显示版本号
+     */
+    'version': {
+      type: 'boolean',
+      short: 'v',
     },
   },
 })

@@ -20,6 +20,7 @@ ${gray('安装后可直接使用 ')}${greenBright('tinify')}${gray(' 命令')}
 
 ${bold(black('使用方法:'))}
   ${greenBright('tinify --help')}                      ${gray('显示帮助信息')}
+  ${greenBright('tinify --version')}                   ${gray('显示版本信息')}
   ${greenBright('tinify init')} ${yellowBright('<key>')}                  ${gray('初始化并设置 API key')}
   ${greenBright('tinify')} ${yellowBright('<glob-pattern>')}              ${gray('压缩匹配到的图片文件')}
   ${greenBright('tinify -n')} ${yellowBright('<glob-pattern>')}           ${gray('压缩文件但不覆盖')}
@@ -31,6 +32,7 @@ ${bold(black('使用方法:'))}
 
 ${bold(black('参数:'))}
   ${greenBright('-h, --help')}                         ${gray('显示帮助信息')}
+  ${greenBright('-v, --version')}                      ${gray('显示版本信息')}
   ${greenBright('-k, --key')} ${yellowBright('<key>')}                    ${gray('设置 API key')}
   ${greenBright('-n, --no-over')}                      ${gray('不覆盖源文件模式，默认覆盖')}
   ${greenBright('-o, --output')} ${yellowBright('<dir>')}                 ${gray('输出目录，默认 tinify-output (仅在不覆盖模式下生效)')}

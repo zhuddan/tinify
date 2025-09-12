@@ -4,6 +4,7 @@ import path from 'node:path'
 import process from 'node:process'
 import fg from 'fast-glob'
 import tinify from 'tinify'
+import { version } from '../../package.json'
 import { API_FREE_CREDITS, CONFIG_KEY, DEFAULT_PATTERN } from '../config'
 import { AsyncTaskManager } from '../core/AsyncTaskManager'
 import { Logger } from '../core/Logger'
@@ -39,6 +40,10 @@ function displayKeyHelp() {
 
 async function main() {
   fetchLatestVersion()
+  if (values.version) {
+    Logger.info(`version: ${version}`)
+    return
+  }
   if (values.help) {
     displayHelp()
     return

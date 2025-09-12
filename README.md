@@ -41,6 +41,7 @@ After installation, you can directly use the `tinify` command.
 | Command Example                                                   | Description                                    |
 |-------------------------------------------------------------------|------------------------------------------------|
 | `tinify --help`                                                   | Display help information                       |
+| `tinify --version`                                               | Display version information                     |
 | `tinify init <key>`                                               | Initialize and set API key                     |
 | `tinify <glob-pattern>`                                           | Compress matched image files                   |
 | `tinify -n <glob-pattern>`                                        | Compress files without overwriting            |
@@ -49,7 +50,7 @@ After installation, you can directly use the `tinify` command.
 | `tinify --limit 10 <glob-pattern>`                                | Concurrency limit, default 10 (recommended for speed) |
 | `tinify --force`                                                  | Force compression, ignore all previously compressed images, default false |
 | `tinify --clear-cache`                                            | Clear all compression cache                    |
-| `tinify --show-key`                                              | Display API Key                                |
+| `tinify --show-key`                                               | Display API Key                                |
 
 ---
 
@@ -57,6 +58,7 @@ After installation, you can directly use the `tinify` command.
 | Parameter                   | Description                                      |
 |-----------------------------|--------------------------------------------------|
 | `-h, --help`                | Display help information                         |
+| `-v, --version`             | Display version information                       |
 | `-k, --key <key>`           | Set API key                                      |
 | `-n, --no-over`             | No-overwrite mode, default is overwrite         |
 | `-o, --output <dir>`        | Output directory, default tinify-output (in no-overwrite mode) |

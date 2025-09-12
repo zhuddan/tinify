@@ -40,6 +40,7 @@
     "postinstall": "node postinstall.js || true",
     "test:cli": "node dist/script.js || true",
     "test:cli:help": "node dist/script.js --help",
+    "test:cli:version": "node dist/script.js --version",
     "test:cli:init": "node dist/script.js init 12345",
     "test:cli:key": "node dist/script.js --key 54321",
     "test:cli:no-over": "node dist/script.js --no-over",
