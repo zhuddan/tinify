@@ -1,8 +1,8 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-import { CACHE_FILE_DIR } from './config'
-import { Logger } from './Logger'
+import { CACHE_FILE_DIR } from '../config'
+import { Logger } from '../core/Logger'
 
 // 根据文件路径生成缓存文件路径
 function getCachePath(filePath: string) {

@@ -3,8 +3,8 @@ import { defineConfig } from 'tsup'
 export default ({ watch }) => (
   defineConfig({
     entry: {
-      script: 'src/index.ts',
-      setup: 'src/setup.ts',
+      script: 'src/cli/index.ts',
+      setup: 'src/cli/setup.ts',
     },
     format: 'cjs',
     platform: 'node',

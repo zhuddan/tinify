@@ -3,9 +3,9 @@
 import fs from 'node:fs'
 
 import process from 'node:process'
-import { CONFIG_DIR } from './config'
-import { displayBanner } from './utils/banner'
-import { fetchLatestVersion } from './utils/version'
+import { CONFIG_DIR } from '../config'
+import { displayBanner } from '../utils/banner'
+import { fetchLatestVersion } from '../utils/version'
 
 function ensureConfigDir(dir: string) {
   try {
