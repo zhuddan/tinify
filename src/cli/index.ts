@@ -62,11 +62,11 @@ async function main() {
     process.exit(1)
   }
 
-  if (key && !getKey()) {
+  if (!getKey()) {
     // 如果全局没有 key，则保存当前 key 以便下次使用
     fs.writeFileSync(CONFIG_KEY, key)
   }
-  tinify.key = `${key}2`
+  tinify.key = key
   const [pattern = DEFAULT_PATTERN] = [command, ...rest].filter(Boolean)
   const overwrite = !values['no-over']
   const inputDir = process.cwd()
