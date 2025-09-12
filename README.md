@@ -49,6 +49,7 @@ After installation, you can directly use the `tinify` command.
 | `tinify --limit 10 <glob-pattern>`                                | Concurrency limit, default 10 (recommended for speed) |
 | `tinify --force`                                                  | Force compression, ignore all previously compressed images, default false |
 | `tinify --clear-cache`                                            | Clear all compression cache                    |
+| `tinify --show-key`                                              | Display API Key                                |
 
 ---
 
@@ -62,6 +63,7 @@ After installation, you can directly use the `tinify` command.
 | `-l, --limit <num>`         | Concurrency limit, default 10 (recommended for speed) |
 | `-f, --force`               | Force compression, ignore all previously compressed images |
 | `-c, --clear-cache`         | Clear all compression cache                      |
+| `-s, --show-key`            | Display API Key                                |
 
 ---
 

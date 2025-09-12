@@ -11,6 +11,14 @@ const { values, positionals } = parseArgs({
       short: 'k',
     },
     /**
+     * 显示当前配置的 API Key
+     */
+    'show-key': {
+      type: 'boolean',
+      short: 's',
+      default: false,
+    },
+    /**
      * 不覆盖源文件模式，默认覆盖
      */
     'no-over': {

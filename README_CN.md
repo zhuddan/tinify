@@ -53,6 +53,7 @@ npm i @zd~/tinify -g
 | `tinify --limit 10 <glob-pattern>`                               | 并发限制，默认10(建议设置以提高速度)   |
 | `tinify --force`                                                 | 强制压缩，忽略所有压缩过的图片，默认false       |
 | `tinify --clear-cache`                                           | 清除所有压缩缓存                     |
+| `tinify --show-key`                                              | 显示当前配置的 API Key               |
 
 ---
 
@@ -67,7 +68,7 @@ npm i @zd~/tinify -g
 | `-l, --limit <num>`         | 并发限制，默认10 (建议设置以提高压缩速度)     |
 | `-f, --force`               | 强制压缩，忽略所有压缩过的图片               |
 | `-c, --clear-cache`         | 清除所有压缩缓存                             |
-
+| `-s, --show-key`            | 显示当前配置的 API Key                       |
 ---
 
 ## 获取 API Key

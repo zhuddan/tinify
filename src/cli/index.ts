@@ -26,6 +26,17 @@ function getKey() {
   }
 }
 
+/**
+ * 显示如何配置 Key 的帮助信息
+ */
+function displayKeyHelp() {
+  Logger.warn('可以通过以下命令配置:\n')
+  Logger.info('  tinify init <your_key>  \n')
+  Logger.info('  或者(这会覆盖全局的key)  \n')
+  Logger.info('  tinify --key <your_key>  \n')
+  Logger.warn('如果没有 Key，可以前往 https://tinypng.com/developers 申请')
+}
+
 async function main() {
   fetchLatestVersion()
   if (values.help) {
@@ -53,12 +64,20 @@ async function main() {
 
   const key = values.key || getKey()
 
+  if (values['show-key']) {
+    if (key) {
+      Logger.info(`当前配置的 API Key: ${key}`)
+    }
+    else {
+      Logger.warn('当前未配置任何 API Key')
+      displayKeyHelp()
+    }
+    process.exit(1)
+  }
+
   if (!key) {
     Logger.error('请先配置 Tinify API Key，可以通过以下命令配置:\n')
-    Logger.info('  tinify init <your_key>  \n')
-    Logger.info('  或者(这会覆盖全局的key)  \n')
-    Logger.info('  tinify --key <your_key>  \n')
-    Logger.warn('如果没有 Key，可以前往 https://tinypng.com/developers 申请')
+    displayKeyHelp()
     process.exit(1)
   }
 

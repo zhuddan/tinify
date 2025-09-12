@@ -46,6 +46,7 @@
     "test:cli:output": "node dist/script.js --no-over --output ___test_output___",
     "test:cli:limit": "node dist/script.js --limit 500",
     "test:cli:force": "node dist/script.js --force",
+    "test:cli:show-key": "node dist/script.js --show-key",
     "test:cli:clear-cache": "node dist/script.js --clear-cache",
     "test:postinstall": "node postinstall.js || true"
   },
