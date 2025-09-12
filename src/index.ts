@@ -66,7 +66,7 @@ async function main() {
     // 如果全局没有 key，则保存当前 key 以便下次使用
     fs.writeFileSync(CONFIG_KEY, key)
   }
-  tinify.key = key
+  tinify.key = `${key}2`
   const [pattern = DEFAULT_PATTERN] = [command, ...rest].filter(Boolean)
   const overwrite = !values['no-over']
   const inputDir = process.cwd()
@@ -74,7 +74,6 @@ async function main() {
     ? inputDir
     : path.resolve(inputDir, values.output)
 
-  console.log('outputDir', outputDir, values.output)
   fs.mkdirSync(outputDir, { recursive: true })
 
   const files = await fg(pattern, { cwd: inputDir, dot: true })
@@ -86,6 +85,7 @@ async function main() {
   Logger.info(`找到需要压缩的图片数量: ${files.length}`)
   let compressProgress = 0
   let skipProgress = 0
+  let failProgress = 0
   const _limit = Number.parseInt(values.limit)
   const limit = Number.isNaN(_limit) ? 10 : _limit <= 0 ? 1 : _limit
   const atm = new AsyncTaskManager({ maxConcurrency: limit })
@@ -110,28 +110,31 @@ async function main() {
         }
       }
       catch (error) {
-        Logger.error(`压缩失败 (${compressProgress}/${files.length}): ${relativePath}`)
-        Logger.error(`压缩失败: ${error}`)
+        failProgress++
+        Logger.error(`压缩失败 (${failProgress}/${files.length}): ${relativePath}`)
+        Logger.error(`          ${error}`)
       }
     }
   })
   atm.addTask(...tasks)
   const startTime = performance.now()
-  try {
-    await atm.run()
-    Logger.success(`${files.length} 张图片压缩完成, 耗时 ${((performance.now() - startTime) / 1000).toFixed(2)} 秒`)
-    Logger.success(`压缩成功 ${compressProgress} 张`)
-    if (skipProgress > 0) {
-      Logger.warn(`跳过 ${skipProgress} 张 (已被压缩过的不回重复压缩)`)
-      Logger.infoBg('如果想要强制压缩，可以添加 --force 参数')
-    }
-    if (compressProgress > 0) {
-      Logger.info(`输出目录: ${outputDir}`)
-      Logger.info(`API 使用量: ${tinify.compressionCount ?? 0} / ${API_FREE_CREDITS}，本月剩余 ${API_FREE_CREDITS - (tinify.compressionCount ?? 0)}`)
-    }
+  await atm.run()
+  Logger.infoBg(`图片压缩完成, 耗时 ${((performance.now() - startTime) / 1000).toFixed(2)} 秒`)
+
+  Logger.success(`压缩成功 ${compressProgress} 张`)
+
+  if (compressProgress > 0) {
+    Logger.info(`输出目录: ${outputDir}`)
+    Logger.info(`API 使用量: ${tinify.compressionCount ?? 0} / ${API_FREE_CREDITS}，本月剩余 ${API_FREE_CREDITS - (tinify.compressionCount ?? 0)}`)
   }
-  catch (error) {
-    Logger.error(`压缩失败: ${error}`)
+
+  if (failProgress > 0) {
+    Logger.error(`压缩失败 ${failProgress} 张，请检查错误信息`)
+  }
+
+  if (skipProgress > 0) {
+    Logger.warn(`跳过 ${skipProgress} 张 (已被压缩过的不回重复压缩)`)
+    Logger.infoBg('如果想要强制压缩，可以添加 --force 参数')
   }
   process.exit(0)
 }
