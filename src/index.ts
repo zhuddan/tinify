@@ -5,7 +5,8 @@ import process from 'node:process'
 import fg from 'fast-glob'
 import tinify from 'tinify'
 import { AsyncTaskManager } from './AsyncTaskManager'
-import { API_FREE_CREDITS, CONFIG_FILE_KEY, DEFAULT_PATTERN } from './config'
+import { clearCache, shouldCompress, writeCache } from './cache'
+import { API_FREE_CREDITS, CONFIG_KEY, DEFAULT_PATTERN } from './config'
 import { Logger } from './Logger'
 import { positionals, values } from './utils/args'
 import { displayBanner } from './utils/banner'
@@ -17,8 +18,8 @@ import { fetchLatestVersion } from './utils/version'
  * @returns 配置的 API Key
  */
 function getKey() {
-  if (fs.existsSync(CONFIG_FILE_KEY)) {
-    return fs.readFileSync(CONFIG_FILE_KEY, 'utf-8').trim()
+  if (fs.existsSync(CONFIG_KEY)) {
+    return fs.readFileSync(CONFIG_KEY, 'utf-8').trim()
   }
   else {
     return null
@@ -31,6 +32,10 @@ async function main() {
     displayHelp()
     return
   }
+  if (values['clear-cache']) {
+    clearCache()
+    return
+  }
   displayBanner()
   // 子命令判断
   const [command, ...rest] = positionals
@@ -41,7 +46,7 @@ async function main() {
       process.exit(1)
     }
     // TODO: 保存 key 到配置文件
-    fs.writeFileSync(CONFIG_FILE_KEY, apiKey)
+    fs.writeFileSync(CONFIG_KEY, apiKey)
     Logger.success(`API Key [${apiKey}] 保存成功!`)
     return
   }
@@ -59,7 +64,7 @@ async function main() {
 
   if (key && !getKey()) {
     // 如果全局没有 key，则保存当前 key 以便下次使用
-    fs.writeFileSync(CONFIG_FILE_KEY, key)
+    fs.writeFileSync(CONFIG_KEY, key)
   }
   tinify.key = key
   const [pattern = DEFAULT_PATTERN] = [command, ...rest].filter(Boolean)
@@ -68,34 +73,71 @@ async function main() {
   const outputDir = overwrite
     ? inputDir
     : path.resolve(inputDir, values.output)
-  const files = await fg(pattern, { cwd: inputDir })
+
+  console.log('outputDir', outputDir, values.output)
+  fs.mkdirSync(outputDir, { recursive: true })
+
+  const files = await fg(pattern, { cwd: inputDir, dot: true })
   if (!files.length) {
     Logger.warn(`找不到任何需要压缩的图片 at`)
     Logger.warn(`${inputDir}`)
     return
   }
   Logger.info(`找到需要压缩的图片数量: ${files.length}`)
-  let progress = 0
+  let compressProgress = 0
+  let skipProgress = 0
   const _limit = Number.parseInt(values.limit)
   const limit = Number.isNaN(_limit) ? 10 : _limit <= 0 ? 1 : _limit
   const atm = new AsyncTaskManager({ maxConcurrency: limit })
-  Logger.info(`清空输出文件夹，开始压缩... (并发限制: ${limit})`)
+  Logger.info(`开始压缩... (并发限制: ${limit})`)
   const tasks = files.map((relativePath) => {
     return async () => {
-      const srcPath = path.join(inputDir, relativePath)
-      const destPath = path.join(outputDir, relativePath)
-      await tinify.fromFile(srcPath).toFile(destPath)
-      progress++
-      Logger.success(`压缩成功 (${progress}/${files.length}): ${relativePath}`)
+      try {
+        const srcPath = path.join(inputDir, relativePath)
+        const destPath = path.join(outputDir, relativePath)
+        const _shouldCompress = shouldCompress(srcPath)
+        if (values.force || _shouldCompress) {
+          fs.mkdirSync(path.dirname(destPath), { recursive: true })
+          await tinify.fromFile(srcPath).toFile(destPath)
+          compressProgress++
+          writeCache(srcPath, fs.statSync(srcPath).mtimeMs) // 写入缓存
+          Logger.success(`压缩成功 (${compressProgress}/${files.length}): ${relativePath}`)
+        }
+        else {
+          await sleep()
+          skipProgress++
+          Logger.warn(`跳过压缩 (${skipProgress}/${files.length}): ${relativePath}`)
+        }
+      }
+      catch (error) {
+        Logger.error(`压缩失败 (${compressProgress}/${files.length}): ${relativePath}`)
+        Logger.error(`压缩失败: ${error}`)
+      }
     }
   })
   atm.addTask(...tasks)
   const startTime = performance.now()
-  await atm.run()
-  Logger.success(`所有图片压缩完成, 耗时 ${((performance.now() - startTime) / 1000).toFixed(2)} 秒`)
-  Logger.info(`输出目录: ${outputDir}`)
-  Logger.info(`API 使用量: ${tinify.compressionCount} / ${API_FREE_CREDITS}，本月剩余 ${API_FREE_CREDITS - (tinify.compressionCount ?? 0)}`)
+  try {
+    await atm.run()
+    Logger.success(`${files.length} 张图片压缩完成, 耗时 ${((performance.now() - startTime) / 1000).toFixed(2)} 秒`)
+    Logger.success(`压缩成功 ${compressProgress} 张`)
+    if (skipProgress > 0) {
+      Logger.warn(`跳过 ${skipProgress} 张 (已被压缩过的不回重复压缩)`)
+      Logger.infoBg('如果想要强制压缩，可以添加 --force 参数')
+    }
+    if (compressProgress > 0) {
+      Logger.info(`输出目录: ${outputDir}`)
+      Logger.info(`API 使用量: ${tinify.compressionCount ?? 0} / ${API_FREE_CREDITS}，本月剩余 ${API_FREE_CREDITS - (tinify.compressionCount ?? 0)}`)
+    }
+  }
+  catch (error) {
+    Logger.error(`压缩失败: ${error}`)
+  }
   process.exit(0)
+}
+
+export function sleep() {
+  return new Promise(resolve => setTimeout(resolve, 100))
 }
 
 main()

@@ -4,6 +4,7 @@ export default ({ watch }) => (
   defineConfig({
     entry: {
       script: 'src/index.ts',
+      setup: 'src/setup.ts',
     },
     format: 'cjs',
     platform: 'node',

@@ -36,7 +36,17 @@
     "build": "tsup",
     "bump": "bump",
     "tag": "bump patch --tag --commit --push",
-    "start": "node --trace-deprecation dist/script.js --help || true"
+    "postinstall": "node ./dist/setup.js",
+    "test:cli": "node dist/script.js || true",
+    "test:cli:init": "node dist/script.js init 12345",
+    "test:cli:key": "node dist/script.js --key 54321",
+    "test:cli:no-over": "node dist/script.js --no-over",
+    "test:cli:output": "node dist/script.js --no-over --output ___test_output___",
+    "test:cli:help": "node dist/script.js --help",
+    "test:cli:limit": "node dist/script.js --limit 500",
+    "test:cli:force": "node dist/script.js --force",
+    "test:cli:clear-cache": "node dist/script.js --clear-cache",
+    "test:postinstall": "node ./dist/setup.js"
   },
   "dependencies": {
     "boxen": "^8.0.1",

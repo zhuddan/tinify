@@ -1,56 +1,77 @@
 # @zd~/tinify [![npm](https://img.shields.io/npm/v/@zd~/tinify.svg)](https://www.npmjs.com/package/@zd~/tinify)
 
-轻量级图片压缩命令行工具，基于 [tinypng.com](https://tinypng.com/developers) API。
+Lightweight image compression command-line tool based on [tinypng.com](https://tinypng.com/developers) API.
+
+<p align="center">
+  <a>
+    English
+  </a>
+  <span> | </span>
+  <a href="./README_CN.md">
+    中文
+  </a>
+</p>
 
 ---
 
-## 准备工作
+## ✨ Features
 
-请确保你有个 [https://tinypng.com/developers](https://tinypng.com/developers) 的 API Key，免费用户每月可压缩 500 张图片。
+- 📂 **Batch Processing**: Supports batch compression with simple `glob` pattern matching.
+- ⚡ **High-Speed Concurrency**: Supports concurrent batch compression with default concurrency of `10`, flexibly adjustable via parameters.
+- 🔄 **Multiple Modes**: Choose between overwriting original images or preserving them.
+- 💾 **Save Your Key**: Supports caching compressed images to avoid duplicate compression, improving efficiency and maximizing your `tinypng key` usage.
+- 🗂️ **Custom Output**: Supports specifying output directory for convenient management of compressed images.
+---
 
-## 安装方法
+## Prerequisites
 
+Make sure you have an API Key from [https://tinypng.com/developers](https://tinypng.com/developers). Free users can compress `500` images per month.
+
+---
+## Installation
 ```bash
 npm i @zd~/tinify -g
 ```
 
-安装后可直接使用 `tinify` 命令。
+After installation, you can directly use the `tinify` command.
 
 ---
 
-## 使用方法
-
-| 命令示例                                                         | 说明                                   |
-|------------------------------------------------------------------|----------------------------------------|
-| `tinify --help`                                                  | 显示帮助信息                           |
-| `tinify init <key>`                                              | 初始化并设置 API key                   |
-| `tinify <glob-pattern>`                                          | 压缩匹配到的图片文件                   |
-| `tinify -n <glob-pattern>`                                       | 压缩文件但不覆盖                       |
-| `tinify --key <key> <glob-pattern>`                              | 使用指定的 key 进行压缩(会覆盖全局 key)|
-| `tinify --no-over <glob-pattern>`                                | 不覆盖模式                             |
-| `tinify --limit 10 <glob-pattern>`                               | 并发限制，默认10(建议设置以提高速度)   |
-
----
-
-## 参数说明
-
-| 参数                        | 说明                                         |
-|-----------------------------|----------------------------------------------|
-| `-h, --help`                | 显示帮助信息                                 |
-| `-k, --key <key>`           | 设置 API key                                 |
-| `-n, --no-over`             | 不覆盖模式，默认覆盖                         |
-| `-o, --output <dir>`        | 输出目录，默认 tinify-output (不覆盖模式下)   |
-| `-l, --limit <num>`         | 并发限制，默认10 (建议设置以提高压缩速度)     |
+## Usage
+| Command Example                                                   | Description                                    |
+|-------------------------------------------------------------------|------------------------------------------------|
+| `tinify --help`                                                   | Display help information                       |
+| `tinify init <key>`                                               | Initialize and set API key                     |
+| `tinify <glob-pattern>`                                           | Compress matched image files                   |
+| `tinify -n <glob-pattern>`                                        | Compress files without overwriting            |
+| `tinify --key <key> <glob-pattern>`                               | Use specified key for compression (overrides global key) |
+| `tinify --no-over <glob-pattern>`                                 | No-overwrite mode                              |
+| `tinify --limit 10 <glob-pattern>`                                | Concurrency limit, default 10 (recommended for speed) |
+| `tinify --force`                                                  | Force compression, ignore all previously compressed images, default false |
+| `tinify --clear-cache`                                            | Clear all compression cache                    |
 
 ---
 
-## 获取 API Key
-
-前往 [https://tinypng.com/developers](https://tinypng.com/developers) 免费申请 API Key。
+## Parameters
+| Parameter                   | Description                                      |
+|-----------------------------|--------------------------------------------------|
+| `-h, --help`                | Display help information                         |
+| `-k, --key <key>`           | Set API key                                      |
+| `-n, --no-over`             | No-overwrite mode, default is overwrite         |
+| `-o, --output <dir>`        | Output directory, default tinify-output (in no-overwrite mode) |
+| `-l, --limit <num>`         | Concurrency limit, default 10 (recommended for speed) |
+| `-f, --force`               | Force compression, ignore all previously compressed images |
+| `-c, --clear-cache`         | Clear all compression cache                      |
 
 ---
 
-## 示例
+## Getting API Key
+
+Visit [https://tinypng.com/developers](https://tinypng.com/developers) to apply for a free API Key.
+
+---
+
+## Examples
 
 ```bash
 tinify init <your_key>
@@ -61,15 +82,15 @@ tinify --key <your_key> "imgs/*.webp"
 
 ---
 
-## 注意事项
-- 免费用户每月可压缩 500 张图片，超过后需要等待下个月重置，或者升级为付费用户。
-- <glob-pattern> 参数默认为 `**/*.{png,jpg,jpeg}`，可根据需要自行调整，可参考 [fast-glob](https://github.com/mrmlnc/fast-glob)。
-- 默认会覆盖原图， 如果不需要覆盖原图，请使用 `--no-over` 参数，并且可以使用 `--output` 参数指定输出目录(默认tinify-output)。
-- 建议设置 `--limit` 参数以提高压缩速度，默认并发数为 10。
-- 用户 `key` 会保存在用户目录下的 `.zd.tinify.key` 文件中，请妥善保管，另外还有个 `.zd.tinify.version` 用于版本更新。
+## Notes
+- Free users can compress `500` images per month. After exceeding the limit, you need to wait for the next month's reset or upgrade to a paid plan.
+- The `<glob-pattern>` parameter defaults to `**/*.(png|jpeg|jpg|gif|webp)`. You can adjust as needed, refer to [fast-glob](https://github.com/mrmlnc/fast-glob).
+- By default, original images will be overwritten. If you don't want to overwrite, use the `--no-over` parameter and optionally use `--output` to specify output directory (default: tinify-output).
+- It's recommended to set the `--limit` parameter to improve compression speed. Default concurrency is `10`.
+- User configuration file is located at `~/.zd.tinify`. You can manually edit this file to modify the `API Key`.
+- Compression cache files are located at `~/.zd.tinify/.cache`. Use `--clear-cache` parameter to delete all cache (cache uses hash sharding, theoretically won't occupy too much space).
 
 ---
 
 ## License
-
 MIT

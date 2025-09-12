@@ -32,7 +32,9 @@ export class AsyncTaskManager<T> {
   private runningCount = 0
   private queue: TaskFn<T>[] = []
   private results: TaskResult<T>[] = []
-
+  /**
+   * 创建 AsyncTaskManager 实例
+   */
   constructor(options: AsyncTaskManagerOptions = {}) {
     this.maxConcurrency = options.maxConcurrency ?? 5
     this.maxRetry = options.maxRetry ?? 2

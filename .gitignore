@@ -10,3 +10,5 @@ dist/
 # VSCode
 .vscode/
 test
+.test-images/
+___test_output___

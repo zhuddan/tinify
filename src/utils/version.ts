@@ -2,15 +2,11 @@ import fs from 'node:fs'
 import https from 'node:https'
 import chalk from 'chalk'
 import { version as currentVersion, name } from '../../package.json'
-import { CONFIG_FILE_VERSION } from '../config'
+import { CONFIG_VERSION } from '../config'
 
 /**
  * 配置文件路径
- *
- * mac & linux: ~/.zd.tinify
- * windows: C:\Users\用户名\.zd.tinify
  */
-
 export function fetchLatestVersion() {
   return new Promise((resolve, reject) => {
     https.get(`https://registry.npmjs.org/${name}/latest`, (res) => {
@@ -19,7 +15,7 @@ export function fetchLatestVersion() {
       res.on('end', () => {
         try {
           const latest = JSON.parse(data).version
-          fs.writeFileSync(CONFIG_FILE_VERSION, latest)
+          fs.writeFileSync(CONFIG_VERSION, latest)
         }
         catch {}
       })
@@ -27,9 +23,12 @@ export function fetchLatestVersion() {
   })
 }
 
+/**
+ * 获取版本更新信息
+ */
 export function getVersionUpdateInfo() {
-  if (fs.existsSync(CONFIG_FILE_VERSION)) {
-    const lastVersion = fs.readFileSync(CONFIG_FILE_VERSION, 'utf-8').trim()
+  if (fs.existsSync(CONFIG_VERSION)) {
+    const lastVersion = fs.readFileSync(CONFIG_VERSION, 'utf-8').trim()
     const v = lastVersion.split('.').map(num => Number.parseInt(num, 10))
     if (v.length !== 3 || v.some(num => Number.isNaN(num))) {
       return ''
@@ -45,6 +44,5 @@ export function getVersionUpdateInfo() {
       return ''
     }
   }
-
   return ''
 }
