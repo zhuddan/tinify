@@ -28,6 +28,7 @@
   },
   "files": [
     "README.md",
+    "README_CN.md",
     "dist",
     "package.json"
   ],
