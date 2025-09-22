@@ -1,5 +1,9 @@
 # @zd~/tinify [![npm](https://img.shields.io/npm/v/@zd~/tinify.svg)](https://www.npmjs.com/package/@zd~/tinify)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png" alt="brand" width="100%"/>
+</p>
+
 轻量级图片压缩命令行工具，基于 [tinypng.com](https://tinypng.com/developers) API。
 
 <p align="center">
