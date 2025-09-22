@@ -49,6 +49,7 @@ jobs:
             --exclude='.github' \
             --exclude='*.log' \
             --exclude='.DS_Store' \
+            --warning=no-file-changed \
             .
 
       - name: Create GitHub Release
