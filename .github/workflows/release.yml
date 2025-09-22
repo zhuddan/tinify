@@ -61,7 +61,7 @@ jobs:
         with:
           files: source-code.tar.gz
           body: |
-            ![tinify banner](https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png?raw=true)
+            ![tinify banner](https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png)
             Update to ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
