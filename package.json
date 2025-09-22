@@ -1,6 +1,6 @@
 {
   "name": "@zd~/tinify",
-  "version": "0.0.39",
+  "version": "0.0.40-beta.1",
   "description": "a tinify cli",
   "author": "zhuddan",
   "license": "MIT",
@@ -27,6 +27,7 @@
     "tinify": "dist/script.js"
   },
   "files": [
+    "LICENSE",
     "README.md",
     "README_CN.md",
     "dist",
