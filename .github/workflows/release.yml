@@ -41,20 +41,20 @@ jobs:
         id: get_version
         run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
+      - name: Create source archive
+        run: |
+          tar -czf source-code.tar.gz \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='*.log' \
+            --exclude='.DS_Store' \
+            .
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            dist/**
-            src/**
-            package.json
-            eslint.config.mjs
-            pnpm-lock.yaml
-            tsup.config.ts
-            postinstall.js
-            README_CN.md
-            README.md
-            tsconfig.json
+          files: source-code.tar.gz
           body: |
             ![tinify banner](https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png?raw=true)
             Update to ${{ env.VERSION }}
