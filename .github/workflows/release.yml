@@ -45,12 +45,18 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            **/*
-            !node_modules/**
-            !.github/**
+            dist/**
+            src/**
+            package.json
+            eslint.config.mjs
+            pnpm-lock.yaml
+            tsup.config.ts
+            postinstall.js
+            README_CN.md
+            README.md
+            tsconfig.json
           body: |
-            ![tinify banner](https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png)
-
+            ![tinify banner](https://raw.githubusercontent.com/zhuddan/tinify/refs/heads/master/.github/brand.png?raw=true)
             Update to ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
