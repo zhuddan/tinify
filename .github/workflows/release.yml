@@ -44,13 +44,17 @@ jobs:
       - name: Create source archive
         run: |
           tar -czf source-code.tar.gz \
-            --exclude='node_modules' \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='*.log' \
-            --exclude='.DS_Store' \
-            --warning=no-file-changed \
-            .
+            dist \
+            src \
+            package.json \
+            README.md \
+            README_CN.md \
+            tsconfig.json \
+            tsup.config.ts \
+            eslint.config.mjs \
+            postinstall.js \
+            LICENSE \
+            pnpm-lock.yaml
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
