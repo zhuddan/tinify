@@ -38,6 +38,13 @@ function displayKeyHelp() {
   Logger.warn('如果没有 Key，可以前往 https://tinypng.com/developers 申请')
 }
 
+function saveKey(key: string) {
+  // 创建配置目录
+  fs.mkdirSync(path.dirname(CONFIG_KEY), { recursive: true })
+  // 保存 key
+  fs.writeFileSync(CONFIG_KEY, key)
+}
+
 async function main() {
   fetchLatestVersion()
   if (values.version) {
@@ -61,8 +68,7 @@ async function main() {
       Logger.error('请提供 key，例如: tinify init <key>')
       process.exit(1)
     }
-    // TODO: 保存 key 到配置文件
-    fs.writeFileSync(CONFIG_KEY, apiKey)
+    saveKey(apiKey)
     Logger.success(`API Key [${apiKey}] 保存成功!`)
     return
   }
@@ -88,7 +94,7 @@ async function main() {
 
   if (!getKey()) {
     // 如果全局没有 key，则保存当前 key 以便下次使用
-    fs.writeFileSync(CONFIG_KEY, key)
+    saveKey(key)
   }
   tinify.key = key
   const [pattern = DEFAULT_PATTERN] = [command, ...rest].filter(Boolean)
