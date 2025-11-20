@@ -1,0 +1,7 @@
+{
+  "greeting": "哈哈",
+  "farewell": "骨骼",
+  "base": {
+    "welcome": "欢迎使用 Tinify 图像压缩工具！"
+  }
+}
