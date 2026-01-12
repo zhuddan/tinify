@@ -9,6 +9,10 @@ export const CONFIG_DIR = path.join(os.homedir(), '.zd.tinify')
  */
 export const CONFIG_KEY = path.join(CONFIG_DIR, '.key')
 /**
+ * 本地化文件名
+ */
+export const LOCALE_KEY = path.join(CONFIG_DIR, '.locale')
+/**
  * 配置文件版本号
  */
 export const CONFIG_VERSION = path.join(CONFIG_DIR, '.version')
