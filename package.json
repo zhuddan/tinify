@@ -31,7 +31,8 @@
     "README.md",
     "README_CN.md",
     "dist",
-    "package.json"
+    "package.json",
+    "postinstall.js"
   ],
   "scripts": {
     "dev": "tsup --watch",
