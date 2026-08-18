@@ -37,6 +37,8 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
+    "prepack": "npm run build",
+    "setup": "node postinstall.js",
     "bump": "bump",
     "tag": "bump patch --tag --commit --push",
     "postinstall": "node postinstall.js || true",
